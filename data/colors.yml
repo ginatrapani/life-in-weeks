@@ -1,0 +1,44 @@
+#
+# This list color-codes the Life in Weeks grid.
+# The box's border color represents where I was living,
+# the background color what I was doing that week.
+# The based and doing values should match what is in events.yml.
+# Convert based and doing class_name's to lower case and replace spaces with dashes
+# i.e., New York City becomes new-york-city
+#
+- class_name: "brooklyn"
+  element: "border"
+  color_name: "#8eb2d6"
+- class_name: "san-diego"
+  element: "border"
+  color_name: "#FCC737"
+- class_name: "north-carolina"
+  element: "border"
+  color_name: "#118B50"
+- class_name: "poughkeepsie"
+  element: "border"
+  color_name: "#469046"
+- class_name: "i-was-tiny"
+  element: "background-color"
+  color_name: "white"
+- class_name: "kindergartner"
+  element: "background-color"
+  color_name: "#FFF6DA"
+- class_name: "student"
+  element: "background-color"
+  color_name: "#E8F9FF"
+- class_name: "high-school-student"
+  element: "background-color"
+  color_name: "#C9E9D2"
+- class_name: "college-student"
+  element: "background-color"
+  color_name: "#FFE3E3"
+- class_name: "working"
+  element: "background-color"
+  color_name: "#F8E7F6"
+- class_name: "freelancing"
+  element: "background-color"
+  color_name: "#d6d6f0"
+- class_name: "funemployed"
+  element: "background-color"
+  color_name: "white"

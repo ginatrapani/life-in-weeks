@@ -1,5 +1,29 @@
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
-vendor
+# Hugo-generated files
+/public/
+/resources/
+/assets/js/bundle.js
+/hugo_stats.json
+
+# Cache & temporary files
+.hugo_build.lock
+.cache/
+.DS_Store
+Thumbs.db
+
+# Logs & system files
+*.log
+*.swp
+*.swo
+*.swn
+
+# Hugo themes (if using submodules, don't ignore)
+themes/**/node_modules/
+themes/**/.cache/
+
+# Local environment files
+.env
+.env.local
+
+# Go Modules (if using Hugo Modules)
+go.sum
+go.mod

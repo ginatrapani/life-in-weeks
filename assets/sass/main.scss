@@ -12,6 +12,16 @@
     --header-font-size-mobile: 36px;
 }
 
+@font-face {
+    font-family: redhatdisplay-medium;
+    src: url(/fonts/RedHatDisplay-Medium.ttf);
+}
+
+@font-face {
+    font-family: redhatdisplay-xtrabold;
+    src: url(/fonts/RedHatDisplay-ExtraBold.ttf);
+}
+
 *,
 :after,
 :before {
@@ -27,7 +37,7 @@
 }
 
 body {
-    font-family: "Red Hat Display", serif;
+    font-family: redhatdisplay-medium, serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-optical-sizing: auto;
@@ -43,6 +53,7 @@ body {
 }
 
 h1 {
+    font-family: redhatdisplay-xtrabold, serif;
     font-weight: 800;
     font-size: var(--header-font-size-desktop);
     margin: 0;

@@ -1,3 +1,7 @@
+#
+# The first event should be birth.
+# The date should match start_date in content/index.md.
+#
 "1975-09-19":
     - headline: "🐣 I was born"
       description: "I entered the world at around 9am in Brooklyn, New York, USA, the youngest of 4 by far, a happy accident. Thanks, Mom. Dad came to the hospital in a jacket and tie to meet me for the first time."
@@ -76,8 +80,8 @@
       association: ""
 
 "1997-06-29":
-    - headline: "⛹️‍♀️ Let's go Liberty"
-      description: "Best graduation gift ever from L: Inaugural season tickets for the WNBA's New York Liberty at Madison Square Garden."
+    - headline: "🗽 NY Liberty"
+      description: "Let's go Liberty! Best graduation gift ever from L: Inaugural season tickets for the WNBA's New York Liberty at Madison Square Garden."
 
 "1997-07-01":
     - headline: "🏠 Moved home"
@@ -87,8 +91,8 @@
       description: "First time to the left coast. Visited Phoenix, Sedona, Yosemite, and San Francisco with Mom & L. This is when I knew I'd move west someday."
 
 "1997-07-15":
-    - headline: "🛗 Elevator company"
-      description: "First professional IT job at the company where Dad and my brothers worked. Mostly learned networking and programming Java."
+    - headline: "🛗 Elevators"
+      description: "First professional IT job at the elevator company where Dad and my brothers worked. Mostly learned networking and programming Java."
       doing: "Working"
       association: "O. Thompson"
 
@@ -208,11 +212,11 @@
       description: "Handed over the editor-in-chief reigns to Adam, transitioned to weekly feature writer, and took on other media clients."
 
 "2009-08-01":
-    - headline: "🎙️ Started podcasting"
+    - headline: "🎙️ First podcast"
       description: "Launched This Week in Google, a podcast with Leo Laporte and Jeff Jarvis. Later, co-hosted All About Android with Jason Howell, In Beta with Kevin Purdy, and The Postlight Podcast/Catalyst."
 
 "2009-08-20":
-    - headline: "📈 Started ThinkUp"
+    - headline: "📈 ThinkUp"
       based: "San Diego"
       doing: "Working"
       association: "ThinkUp"
@@ -253,7 +257,7 @@
       description: "The Supreme Court of the United States ruled in the case of Obergefell v. Hodges that a fundamental right to marry is guaranteed to same-sex couples by the Fourteenth Amendment, and that states must allow same-sex marriage."
 
 "2015-08-04":
-    - headline: "🇺🇸 White House visit"
+    - headline: "🇺🇸 White House"
       description: "Launched Makerbase at the White House at its first-ever Demo Day, hosted by President Obama (on his birthday!). We sang Happy Birthday to him in the East Wing."
 
 "2015-09-18":
@@ -377,42 +381,3 @@
     - headline: "🇺🇸 Biden inaugurated"
 "2025-01-20":
     - headline: "🇺🇸 Cheeto inaugurated"
-
-
-colors:
-    - class_name: "brooklyn"
-      element: "border"
-      color_name: "#8eb2d6"
-    - class_name: "san-diego"
-      element: "border"
-      color_name: "#FCC737"
-    - class_name: "north-carolina"
-      element: "border"
-      color_name: "#118B50"
-    - class_name: "poughkeepsie"
-      element: "border"
-      color_name: "#469046"
-    - class_name: "i-was-tiny"
-      element: "background-color"
-      color_name: "white"
-    - class_name: "kindergartner"
-      element: "background-color"
-      color_name: "#FFF6DA"
-    - class_name: "student"
-      element: "background-color"
-      color_name: "#E8F9FF"
-    - class_name: "high-school-student"
-      element: "background-color"
-      color_name: "#C9E9D2"
-    - class_name: "college-student"
-      element: "background-color"
-      color_name: "#FFE3E3"
-    - class_name: "working"
-      element: "background-color"
-      color_name: "#F8E7F6"
-    - class_name: "freelancing"
-      element: "background-color"
-      color_name: "#d6d6f0"
-    - class_name: "funemployed"
-      element: "background-color"
-      color_name: "white"

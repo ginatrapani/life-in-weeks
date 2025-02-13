@@ -1,0 +1,15 @@
+<style>
+    .life-in-weeks { {{ range .Site.Data.colors }}
+        .{{ .class_name }},
+        .{{ .class_name }}:active,
+        .{{ .class_name }}.focus {
+            {{- if eq .element "border" -}}
+            border: 2px solid {{ .color_name }};
+            {{- end -}}
+            {{- if eq .element "background-color" -}}
+            background-color: {{ .color_name }};
+            {{- end -}}
+         }
+         {{ end }}
+    }
+</style>

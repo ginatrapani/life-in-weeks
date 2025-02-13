@@ -1,0 +1,27 @@
+<script>
+    $(document).ready(function () {
+        $(function () {
+            var today = new Date();
+            $(".week").each(function (index) {
+                if (today < Date.parse($(this).attr("data-date"))) {
+                    $(this).addClass("future-date");
+                    $(this).attr("data-bs-toggle", null);
+                }
+            });
+            $(".birthday").each(function (index) {
+                if (today < Date.parse($(this).attr("data-date"))) {
+                    $(this).addClass("future-date");
+                    $(this).attr("data-bs-toggle", null);
+                }
+            });
+            const tooltipTriggerList = $('[data-bs-toggle="tooltip"]',);
+            const tooltipList = [...tooltipTriggerList].map(
+                (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
+            );
+        });
+        $(window).on("scroll touchmove", function () {
+            $("h1").toggleClass("tiny", $(document).scrollTop() > 0);
+            $(".navbar").toggleClass("d-block", $(document).scrollTop() > 200);
+        });
+    });
+</script>

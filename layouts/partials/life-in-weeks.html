@@ -1,0 +1,201 @@
+{{- /*
+Overview
+========
+This template has a lot of logic and variables to grok. Here are some high-level notes to my future self who will inevitably want to update this site and then curse my past self for making this too complicated.
+
+There are three types of boxes that appear in the weeks grid:
+- Birthday boxes: Label and tooltip generated automatically based on start date in index.md
+- Event boxes: Label and toolip come from events.yml
+- Empty week boxes: Tooltip generated from last-set based, doing, and associated fields in events.yml.
+
+This template renders a button through the helpers/box.html partial.
+
+Colors
+- Are defined in data/colors.yml.
+- This template adds the CSS classes basedClass and doingClass to each button to specify the border and background-colors of each box.
+
+This template uses $.Store to keep updated variable values in scope outside of ranges and other loops.
+
+There are three main loops in this page, each nested inside the other: Years, Weeks, Days.
+*/ -}}
+
+{{ $data := .Site.Data.events }}
+
+{{ $startDate := .Params.start_date }}
+{{ $splitStart := split $startDate "-" }}
+{{ $startYear := index $splitStart 0 }}
+{{ $startMonth := index $splitStart 1 }}
+{{ $startDay := index $splitStart 2 }}
+{{ $endYear := .Params.end_year }}
+{{ $.Store.Set "association" "" }}
+{{ $.Store.Set "specificDate" $startDate }}
+
+{{- /* Row control vars, be sure to test adjustments mobile-first */ -}}
+{{ $.Store.Set "totalBoxesInRow" 0 }} {{- /* Increments with each week */ -}}
+{{ $.Store.Set "maxBoxesInRow" 21 }} {{- /* Keep it justified, right edge even */ -}}
+{{ $.Store.Set "labelLenMultiplier" .45 }} {{- /* Adjust up or down for snugness */ -}}
+
+{{- /* Set starting values with first event */ -}}
+{{ range $date, $events := $data }}
+    {{ range $events }}
+        {{ $.Store.Set "based" .based }}
+        {{ $.Store.Set "basedClass" (replace (lower .based) " " "-") }}
+        {{ $.Store.Set "doing" .doing }}
+        {{ $.Store.Set "doingClass" (replace (lower .doing) " " "-") }}
+        {{ break }}
+    {{ end }}
+    {{ break }}
+{{ end }}
+<div class="row mt-3">
+    <div id="decade-0">
+        <div class="col-12 d-flex justify-content-between">
+    {{- /* Start years loop  */ -}}
+    {{- range $year := seq $startYear $endYear -}}
+        {{ $yearString := printf "%d" $year }}
+        {{ $thisYear := printf "%s-%s-%s" $yearString $startMonth $startDay }}
+        {{ $thisYearTime := time.AsTime $thisYear }}
+        {{ $startYearInt := int $startYear }}
+        {{ $nextYearString := printf "%d" (add $year 1) }}
+        {{ $nextYear := printf "%s-%s-%s" $nextYearString $startMonth $startDay }}
+        {{ $age := sub $year $startYearInt }}
+
+        {{- /* Start new div for decade navigation  */ -}}
+        {{ if ne $age 0 }}
+            {{ $decadeDiff := mod $age 10 }}
+            {{ if eq $decadeDiff 0 }}
+        </div>
+    </div>
+    <div id="decade-{{ $age }}">
+        <div class="col-12 d-flex justify-content-between">
+                {{ $.Store.Set "totalBoxesInRow" 0 }}
+            {{ end }}
+            {{- /* Check if we need to break to the next row before the birthday */ -}}
+            {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+                {{ partial "helpers/new-row.html" . }}
+                {{ $.Store.Set "totalBoxesInRow" 0 }}
+            {{ end }}
+
+            {{- /* Set stored vars for birthday button */ -}}
+            {{ $buttonClass := printf "btn birthday %s %s text-nowrap" ($.Store.Get "basedClass") ($.Store.Get "doingClass") }}
+            {{ $.Store.Set "buttonClass" $buttonClass }}
+            {{ $.Store.Set "buttonDataDate" $thisYear }}
+            {{ $.Store.Set "buttonDataBSTitle" (printf "%s – Turned %d year%s old" (dateFormat "Jan 2, 2006" $thisYear) $age (cond (ne $age 1) "s" "")) }}
+            {{ $buttonLabel := (printf "🎂 %d in %d" $age $year) }}
+            {{ $.Store.Set "buttonLabel" $buttonLabel }}
+            {{- /* Render birthday button */ -}}
+            {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+
+            {{- /* Set next birthday */ -}}
+            {{ $nextYearString := printf "%d" (add $year 1) }}
+            {{ $nextYear := printf "%s-%s-%s" $nextYearString $startMonth $startDay }}
+
+            {{ $.Store.Set "totalBoxesInRow" ( add
+                ($.Store.Get "totalBoxesInRow")
+                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
+            ) }}
+            {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+                {{ partial "helpers/new-row.html" . }}
+                {{ $.Store.Set "totalBoxesInRow" 0 }}
+            {{ end }}
+        {{ end }}
+
+        {{- /* Start weeks loop  */ -}}
+        {{- range $week := seq 0 52 -}}
+            {{ $.Store.Set "week" $week }}
+            {{ $thisWeekDate := $thisYearTime.AddDate 0 0 (mul $week 7 | int) | time.Format "2006-01-02" }}
+            {{ $endYearDate := $thisWeekDate | time.AsTime | time.Format "2006-01-02" }}
+            {{ if ne $week 0 }}
+
+                {{- /* Set stored vars for an empty week button */ -}}
+                {{ $buttonClass := printf "btn week %s %s w-100" ($.Store.Get "basedClass") ($.Store.Get "doingClass") }}
+                {{ $.Store.Set "buttonClass" $buttonClass }}
+                {{ $.Store.Set "buttonDataDate" $thisWeekDate }}
+                {{ $buttonDataBSTitle := (printf "%s – %s%s%s, based in %s"
+                    (dateFormat "Jan 2, 2006" $thisWeekDate)
+                    ($.Store.Get "doing")
+                    (cond (ne ($.Store.Get "association") "") " at " "")
+                    ($.Store.Get "association")
+                    ($.Store.Get "based"))
+                }}
+                {{ $.Store.Set "buttonDataBSTitle" $buttonDataBSTitle }}
+                {{ $.Store.Set "buttonLabel" "" }}
+                {{- /* Render empty week button */ -}}
+                {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+
+                {{ $.Store.Set "totalBoxesInRow" ( add ($.Store.Get "totalBoxesInRow") 1 ) }}
+                {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+                    {{ partial "helpers/new-row.html" . }}
+                    {{ $.Store.Set "totalBoxesInRow" 0 }}
+                {{ end }}
+            {{ end }}
+
+            {{- /* Start days loop  */ -}}
+            {{- range $day := seq 0 6 -}}
+                {{ $daysAhead := add (mul $week 7 | int)  ($day | int) | int }}
+                {{ $specDateAsTime := ($thisYearTime.AddDate 0 0 $daysAhead  | time.Format "2006-01-02") }}
+                {{ $specDate := printf "%s" $specDateAsTime }}
+                {{ $.Store.Set "specificDate" $specDate }}
+                {{ if lt ( $specDateAsTime | time.AsTime ) ($nextYear | time.AsTime) }}
+                    {{ with index $data $specDate }}
+                        {{ range . }}
+                            {{- /* Check if we need to break to the next row before the event */ -}}
+                            {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+                                {{ partial "helpers/new-row.html" . }}
+                                {{ $.Store.Set "totalBoxesInRow" 0 }}
+                            {{ end }}
+
+                            {{ if .based }}
+                                {{ $.Store.Set "based" .based }}
+                                {{ $.Store.Set "basedClass" (replace (lower .based) " " "-") }}
+                            {{ end }}
+                            {{ if .doing }}
+                                {{ $.Store.Set "doing" .doing }}
+                                {{ $.Store.Set "doingClass" (replace (lower .doing) " " "-") }}
+                            {{ end }}
+                            {{ if ne .association nil }}
+                                {{ $.Store.Set "association" .association }}
+                            {{ end }}
+
+                            {{- /* Set stored vars for an event button */ -}}
+                            {{ $buttonClass := printf "btn week %s %s text-nowrap text-left" ($.Store.Get "basedClass") ($.Store.Get "doingClass") }}
+                            {{ $.Store.Set "buttonClass" $buttonClass }}
+                            {{ $.Store.Set "buttonDataDate" $specDate }}
+                            {{ with .description }}
+                                {{ $.Store.Set "buttonDataBSTitle" (printf "%s – %s" (dateFormat "Jan 2, 2006" $specDate ) . ) }}
+                            {{ end }}
+                            {{ $buttonLabel := .headline }}
+                            {{ $.Store.Set "buttonLabel" $buttonLabel }}
+
+                            {{- /* Break if the button label will make the row too long */ -}}
+                            {{ $rowPlusEventTotalBoxes := ( add
+                                ($.Store.Get "totalBoxesInRow")
+                                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
+                            ) }}
+                            {{ if ge $rowPlusEventTotalBoxes ($.Store.Get "maxBoxesInRow") }}
+                                {{ partial "helpers/new-row.html" . }}
+                                {{ $.Store.Set "totalBoxesInRow" 0 }}
+                            {{ end }}
+
+                            {{- /* Render event button */ -}}
+                            {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+
+                            {{ $.Store.Set "totalBoxesInRow" ( add
+                                ($.Store.Get "totalBoxesInRow")
+                                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
+                            ) }}
+                            {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+                                {{ partial "helpers/new-row.html" . }}
+                                {{ $.Store.Set "totalBoxesInRow" 0 }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
+            {{ partial "helpers/new-row.html" . }}
+            {{ $.Store.Set "totalBoxesInRow" 0 }}
+        {{ end }}
+    {{- end -}}
+    </div>
+</div>

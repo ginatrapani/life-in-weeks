@@ -1,2 +1,14 @@
 [build.environment]
-  RUBY_VERSION = "3.3.5"
+HUGO_VERSION = "0.143.1"
+NODE_VERSION = "22"
+TZ = "America/New_York"
+
+[build]
+publish = "public"
+command = "hugo --gc --minify"
+
+[context.production]
+command = "hugo --minify --baseURL https://weeks.ginatrapani.org/"
+
+[context.deploy-preview]
+command = "hugo --baseURL $DEPLOY_PRIME_URL"
