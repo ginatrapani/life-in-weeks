@@ -16,8 +16,8 @@ This code was copied and adapted from [Buster Benson](https://busterbenson.com/l
    ```
 2. Clone and run locally:
 ```sh
-    git clone https://github.com/ginatrapani/ginatrapani.org.git
-    cd ginatrapani.org
+    git clone https://github.com/ginatrapani/life-in-weeks.git
+    cd life-in-weeks
     hugo server -D
 ```
 3. Visit [http://localhost:1313/](http://localhost:1313/).
