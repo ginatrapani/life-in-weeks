@@ -70,6 +70,16 @@
       description: "New journey"
       based: "Sydney"
 
+"2020-03-15":
+    - headline: "🦠 Covid-19"
+      description: "Global pandemic"
+      based: "Sydney"
+
+"2020-05-07":
+    - headline: "🧘 Meditation"
+      description: "Entered the spiritual world"
+      based: "Sydney"
+
 "2025-02-16":
     - headline: "📍 Made this"
       description: "Thanks Gina"
