@@ -33,7 +33,8 @@ There are three main loops in this page, each nested inside the other: Years, We
 {{- /* Row control vars, be sure to test adjustments mobile-first */ -}}
 {{ $.Store.Set "totalBoxesInRow" 0 }} {{- /* Increments with each week */ -}}
 {{ $.Store.Set "maxBoxesInRow" 21 }} {{- /* Keep it justified, right edge even */ -}}
-{{ $.Store.Set "labelLenMultiplier" .45 }} {{- /* Adjust up or down for snugness */ -}}
+{{ $.Store.Set "boxEndMultiplier" .45 }} {{- /* Larger, adjust up or down for snugness */ -}}
+{{ $.Store.Set "boxCharMultiplier" .319 }} {{- /* Smaller, adjust up or down for snugness */ -}}
 
 {{- /* Set starting values with first event */ -}}
 {{ range $date, $events := $data }}
@@ -82,17 +83,22 @@ There are three main loops in this page, each nested inside the other: Years, We
             {{ $.Store.Set "buttonDataBSTitle" (printf "%s – Turned %d year%s old" (dateFormat "Jan 2, 2006" $thisYear) $age (cond (ne $age 1) "s" "")) }}
             {{ $buttonLabel := (printf "🎂 %d in %d" $age $year) }}
             {{ $.Store.Set "buttonLabel" $buttonLabel }}
+
+            {{- /* Break if the button label will make the row too long */ -}}
+            {{ $newRowBoxes := float (partial "helpers/calculate-row-boxes.html" (dict "Store" $.Store)) }}
+            {{ if ge $newRowBoxes ($.Store.Get "maxBoxesInRow") }}
+                {{ partial "helpers/new-row.html" . }}
+                {{ $.Store.Set "totalBoxesInRow" 0 }}
+            {{ end }}
+
             {{- /* Render birthday button */ -}}
-            {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+            {{ partial "helpers/box.html" (dict "Store" $.Store) }}
 
             {{- /* Set next birthday */ -}}
             {{ $nextYearString := printf "%d" (add $year 1) }}
             {{ $nextYear := printf "%s-%s-%s" $nextYearString $startMonth $startDay }}
 
-            {{ $.Store.Set "totalBoxesInRow" ( add
-                ($.Store.Get "totalBoxesInRow")
-                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
-            ) }}
+            {{ partial "helpers/increase-row-boxes.html" (dict "Store" $.Store) }}
             {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
                 {{ partial "helpers/new-row.html" . }}
                 {{ $.Store.Set "totalBoxesInRow" 0 }}
@@ -120,7 +126,7 @@ There are three main loops in this page, each nested inside the other: Years, We
                 {{ $.Store.Set "buttonDataBSTitle" $buttonDataBSTitle }}
                 {{ $.Store.Set "buttonLabel" "" }}
                 {{- /* Render empty week button */ -}}
-                {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+                {{ partial "helpers/box.html" (dict "Store" $.Store) }}
 
                 {{ $.Store.Set "totalBoxesInRow" ( add ($.Store.Get "totalBoxesInRow") 1 ) }}
                 {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
@@ -167,22 +173,16 @@ There are three main loops in this page, each nested inside the other: Years, We
                             {{ $.Store.Set "buttonLabel" $buttonLabel }}
 
                             {{- /* Break if the button label will make the row too long */ -}}
-                            {{ $rowPlusEventTotalBoxes := ( add
-                                ($.Store.Get "totalBoxesInRow")
-                                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
-                            ) }}
-                            {{ if ge $rowPlusEventTotalBoxes ($.Store.Get "maxBoxesInRow") }}
+                            {{ $newRowBoxes := float (partial "helpers/calculate-row-boxes.html" (dict "Store" $.Store)) }}
+                            {{ if ge $newRowBoxes ($.Store.Get "maxBoxesInRow") }}
                                 {{ partial "helpers/new-row.html" . }}
                                 {{ $.Store.Set "totalBoxesInRow" 0 }}
                             {{ end }}
 
                             {{- /* Render event button */ -}}
-                            {{ partial "helpers/box.html" (dict "Store" $.Store)  }}
+                            {{ partial "helpers/box.html" (dict "Store" $.Store) }}
 
-                            {{ $.Store.Set "totalBoxesInRow" ( add
-                                ($.Store.Get "totalBoxesInRow")
-                                ( mul (len $buttonLabel) ($.Store.Get "labelLenMultiplier") )
-                            ) }}
+                            {{ partial "helpers/increase-row-boxes.html" (dict "Store" $.Store) }}
                             {{ if ge ($.Store.Get "totalBoxesInRow") ($.Store.Get "maxBoxesInRow") }}
                                 {{ partial "helpers/new-row.html" . }}
                                 {{ $.Store.Set "totalBoxesInRow" 0 }}

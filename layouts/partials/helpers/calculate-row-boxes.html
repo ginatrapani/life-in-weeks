@@ -1,0 +1,17 @@
+{{- /*
+Given a box's label, calculate how many boxes a row would contain with that box
+Both birthday and event boxes have labels that span the width of multiple empty week boxes
+Calculate how many empty boxes a box would span based on its label length,
+then add to the current length of the row in boxes.
+To do this rough calculation:
+1. Multiply start and end by the larger "box end" multiplier
+2. Multiply the remaining characters in the box label by the smaller character multiplier
+3. Add the result together, plus the current total boxes in the row
+*/ -}}
+{{- $lenLabelLessTwo := sub (len ($.Store.Get "buttonLabel")) 2 -}}
+{{- add ( $.Store.Get "totalBoxesInRow" )
+    ( add
+        ( mul 2 ($.Store.Get "boxEndMultiplier") )
+        ( mul $lenLabelLessTwo ($.Store.Get "boxCharMultiplier") )
+    )
+-}}
