@@ -38,7 +38,7 @@
       description: "New Kids on the Block at Madison Square Garden. Whole school won tickets in an NYC radio contest by writing the most index cards of any other school in the 5 boroughs."
 
 "1991-10-01":
-    - headline: "💶 Europe"
+    - headline: "💶 Visited Europe"
       description: "My first time travelling outside of the US was a school trip to Europe: Italy, France, and England. Begged my parents to let me go on this trip instead of have a sweet sixteen party (blech)."
 
 "1992-09-20":
@@ -56,8 +56,12 @@
     - headline: "🖨️ Help desk"
       description: "Started an on-campus job at Marist's computer lab help desk, where I worked all 4 years. The lab ran mainframe terminals, OS/2 and DOS workstations. Printers jammed constantly. Earned minimum wage, $4.25/hour, and learned so much."
 
+"1993-09-10":
+    - headline: "👽 The X-Files"
+      description: "The X-Files pilot aired on this day. I didn't watch much TV in college so it probably took me a couple of seasons to get turned onto it, but once I did... The X-Files and in particular Dana Scully made a huge impression on young me, and began my life-long Gillian Anderson adoration."
+
 "1994-10-01":
-    - headline: "🌎 Saw first webpage"
+    - headline: "🌎 Saw my first webpage"
       description: "Around this time, I saw a webpage for the first time. A coworker in the computer lab showed me the Mosaic browser running on OS/2. Lightbulb moment."
 
 "1995-10-03":
@@ -65,7 +69,7 @@
       description: "Miss you every day."
 
 "1996-10-01":
-    - headline: "🌎 Made first webpages"
+    - headline: "🌎 Made my first webpages"
       description: "Around this time, I started making my own webpages in earnest, spending long nights in the lab office, a room of my own with a computer and a door."
 
 "1997-03-21":
@@ -87,7 +91,7 @@
     - headline: "🏠 Moved home"
 
 "1997-07-01":
-    - headline: "🌅 West"
+    - headline: "🌅 Went west"
       description: "Took my first trip to the left coast with Mom & L. We visited Phoenix, Sedona, Yosemite, and San Francisco. This is when I knew I'd move west someday."
 
 "1997-07-15":
@@ -119,12 +123,12 @@
       description: "We survived!"
 
 "2000-01-01":
-    - headline: "🏡 Left home"
+    - headline: "🚙 Left home"
       description: "Moved in with L, my first working-adult apartment."
 
 "2000-03-01":
     - headline: "⚡️ Bolt"
-      description: "First professional web developer job. Learned ASP, SQL, and PHP here but most importantly, met a lifelong friend."
+      description: "Started my first professional web developer job at an NYC dot-com, an early social network for teens. Learned ASP, SQL, and PHP here but most importantly, met a lifelong friend."
       based: "Brooklyn"
       doing: "Working"
       association: "Bolt"
@@ -182,6 +186,10 @@
       association: "Lifehacker"
       description: "Switched coasts, to T's hometown."
 
+"2006-05-12":
+    - headline: "✅ Released Todo.txt"
+      description: "Kicked off a decade of building and maintaining a set of todo list apps, which read and wrote from human-readable plain text files. Published the original todo.sh shell script on this day, which blossomed into a thriving open source community effort around the Todo.txt file format, command-line tool, and an expanding universe of apps and plugins. This longtime, beloved project is where I learned advanced shell scripting, Android and iOS development, git, GitHub, but most importantly about the power of open source code, community, collaboration, and OSS governance."
+
 "2006-10-10":
     - headline: "📚 Published my book"
       description: "The Lifehacker book was published by Wiley. Over time, it went to 3 editions with a handful of translations, including Italian."
@@ -209,7 +217,7 @@
     - headline: "👩‍💻 Left Lifehacker"
       doing: "Freelancing"
       association: ""
-      description: "Handed over the editor-in-chief reigns to Adam, transitioned to weekly feature writer, and took on other media clients."
+      description: "Handed off the editor-in-chief reigns to Adam, transitioned to weekly feature writer, and took on other media clients."
 
 "2009-08-01":
     - headline: "🎙️ First podcast"
@@ -230,8 +238,8 @@
     - headline: "💍 Married 10 years"
 
 "2011-06-15":
-    - headline: "₿ Bitcoin"
-      description: "Got my first Bitcoin by chance from a generous nerd when I attended a conference talk about some newfangled digital currency. He handed Bitcoins out at the end to anyone who was curious, and I was curious."
+    - headline: "₿ First Bitcoin"
+      description: "Got my first Bitcoin by chance from a generous nerd when I attended a conference talk about some newfangled digital currency. He handed Bitcoins out at the end to anyone who was curious. I was curious."
 
 "2011-07-01":
     - headline: "🇨🇳 Visited China"
@@ -253,11 +261,11 @@
     - headline: "👶 E turned 2"
 
 "2015-05-15":
-    - headline: "🛠️ Makerbase"
+    - headline: "🛠️ Made Makerbase"
       description: "Launched ThinkUp LLC's second product, Makerbase, an IMDb for digital product creators. Fog Creek software acquired Makerbase the next year."
 
 "2015-06-26":
-    - headline: "🏳️‍🌈 Marriage legalized"
+    - headline: "🏳️‍🌈 Marriage recognized nationally"
       description: "Same-sex marriage became legally recognized in all 50 states across the U.S. The Supreme Court ruled in the case of Obergefell v. Hodges that a fundamental right to marry is guaranteed to same-sex couples by the Fourteenth Amendment, and that states must allow same-sex marriage."
 
 "2015-08-04":
@@ -283,6 +291,10 @@
 
 "2017-06-15":
     - headline: "🏢 Partner at Postlight"
+
+"2017-08-15":
+    - headline: "✅ Transitioned Todo.txt"
+      description: "Stepped away from hands-on maintenance, and transferred the Todo.txt projects to a new community-led organization."
 
 "2017-09-18":
     - headline: "👧 E turned 5"
@@ -341,8 +353,12 @@
     - headline: "👩‍⚕️ Cancer"
       description: "Grateful to MSK for my successful treatment."
 
+"2023-03-03":
+    - headline: "🌍 REF"
+      description: "Joined the board of directors of the Radiant Earth Foundation, a progressive non-profit working on improving access to data about our world."
+
 "2023-07-01":
-    - headline: "🇮🇹 Sicily"
+    - headline: "🇮🇹 Visited Sicily"
       description: "Whole fam-damily spent two weeks not far from Trapani, Sicily."
 
 "2023-09-18":
