@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/sass/main.scss">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#lifeinweeks-navbar" data-bs-offset="0" tabindex="0">
+    <div id="fullscreen" class="justify-content-center">
+        <div>
+            <section class="life-in-weeks">
+                <div class="sticky-top">
+                    <h1><a href="/">{{ title }}</a></h1>
+                    <nav class="navbar" id="lifeinweeks-navbar">
+                        <div class="p-0">
+                            <ul class="nav nav-pills justify-content-between">
+                                <li class="nav-item"><a class="nav-link" href="#decade-0">Birth</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-10">Teens</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-20">20s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-30">30s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-40">40s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-50">50s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-60">60s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-70">70s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-80">80s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-90">90s</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#decade-100">100</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-12">
+                        {{ content }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div id="decade-0">
+                        <div class="col-12 d-flex justify-content-between">
+                            {% for year in range(startYear, endYear + 1) %}
+                                {% set age = year - startYear %}
+                                {% if age != 0 and age % 10 == 0 %}
+                                    </div>
+                                </div>
+                                <div id="decade-{{ age }}">
+                                    <div class="col-12 d-flex justify-content-between">
+                                {% endif %}
+                                {% set yearString = year | string %}
+                                {% set thisYear = yearString + '-' + startMonth + '-' + startDay %}
+                                {% set thisYearTime = thisYear | date %}
+                                {% set nextYearString = (year + 1) | string %}
+                                {% set nextYear = nextYearString + '-' + startMonth + '-' + startDay %}
+                                {% set buttonClass = 'btn birthday ' + basedClass + ' ' + doingClass + ' text-nowrap' %}
+                                {% set buttonDataDate = thisYear %}
+                                {% set buttonDataBSTitle = thisYear | date('M d, Y') + ' – Turned ' + age | string + ' year' + ('s' if age != 1 else '') %}
+                                {% set buttonLabel = '🎂 ' + age | string + ' in ' + yearString %}
+                                {% include 'helpers/box.njk' with {
+                                    buttonClass: buttonClass,
+                                    buttonDataDate: buttonDataDate,
+                                    buttonDataBSTitle: buttonDataBSTitle,
+                                    buttonLabel: buttonLabel
+                                } %}
+                                {% for week in range(0, 53) %}
+                                    {% set thisWeekDate = thisYearTime | date_modify('+' ~ (week * 7) ~ ' days') %}
+                                    {% if week != 0 %}
+                                        {% set buttonClass = 'btn week ' + basedClass + ' ' + doingClass + ' w-100' %}
+                                        {% set buttonDataDate = thisWeekDate | date('Y-m-d') %}
+                                        {% set buttonDataBSTitle = thisWeekDate | date('M d, Y') + ' – ' + doing + (association if association else '') + ', based in ' + based %}
+                                        {% set buttonLabel = '' %}
+                                        {% include 'helpers/box.njk' with {
+                                            buttonClass: buttonClass,
+                                            buttonDataDate: buttonDataDate,
+                                            buttonDataBSTitle: buttonDataBSTitle,
+                                            buttonLabel: buttonLabel
+                                        } %}
+                                    {% endif %}
+                                    {% for day in range(0, 7) %}
+                                        {% set specDate = thisYearTime | date_modify('+' ~ (week * 7 + day) ~ ' days') %}
+                                        {% if specDate < nextYear | date %}
+                                            {% set events = events[specDate | date('Y-m-d')] %}
+                                            {% if events %}
+                                                {% for event in events %}
+                                                    {% if event.based %}
+                                                        {% set based = event.based %}
+                                                        {% set basedClass = based | lower | replace(' ', '-') %}
+                                                    {% endif %}
+                                                    {% if event.doing %}
+                                                        {% set doing = event.doing %}
+                                                        {% set doingClass = doing | lower | replace(' ', '-') %}
+                                                    {% endif %}
+                                                    {% if event.association is not none %}
+                                                        {% set association = event.association %}
+                                                    {% endif %}
+                                                    {% set buttonClass = 'btn week ' + basedClass + ' ' + doingClass + ' text-nowrap text-left' %}
+                                                    {% set buttonDataDate = specDate | date('Y-m-d') %}
+                                                    {% set buttonDataBSTitle = specDate | date('M d, Y') + ' – ' + (event.description if event.description else doing + (association if association else '') + ', based in ' + based) %}
+                                                    {% set buttonLabel = event.headline %}
+                                                    {% include 'helpers/box.njk' with {
+                                                        buttonClass: buttonClass,
+                                                        buttonDataDate: buttonDataDate,
+                                                        buttonDataBSTitle: buttonDataBSTitle,
+                                                        buttonLabel: buttonLabel
+                                                    } %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                var today = new Date();
+                $(".week").each(function (index) {
+                    if (today < Date.parse($(this).attr("data-date"))) {
+                        $(this).addClass("future-date");
+                        $(this).attr("data-bs-toggle", null);
+                    }
+                });
+                $(".birthday").each(function (index) {
+                    if (today < Date.parse($(this).attr("data-date"))) {
+                        $(this).addClass("future-date");
+                        $(this).attr("data-bs-toggle", null);
+                    }
+                });
+                const tooltipTriggerList = $('[data-bs-toggle="tooltip"]');
+                const tooltipList = [...tooltipTriggerList].map(
+                    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+                );
+            });
+            $(window).on("scroll touchmove", function () {
+                $("h1").toggleClass("tiny", $(document).scrollTop() > 0);
+                $(".navbar").toggleClass("d-block", $(document).scrollTop() > 200);
+            });
+        });
+    </script>
+</body>
+</html>

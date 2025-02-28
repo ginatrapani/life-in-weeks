@@ -6,30 +6,30 @@ I made this to help myself see the bigger picture of the road I've walked.
 
 Read more about [Life in Weeks at Wait But Why](https://waitbutwhy.com/2014/05/life-weeks.html).
 
-This code was copied and adapted from [Buster Benson](https://busterbenson.com/life-in-weeks). It is a single webpage statically-rendered with [Hugo](https://gohugo.io/) hosted on Netlify. It consists of two [data](data/events.yml) [files](data/colors.yml), [an introduction](content/index.md), and a [template](layouts/_default/index.html).
+This code was copied and adapted from [Buster Benson](https://busterbenson.com/life-in-weeks). It is a single webpage statically-rendered with [11ty](https://www.11ty.dev/) hosted on Netlify. It consists of two [data](src/_data/events.yml) [files](src/_data/colors.yml), [an introduction](src/content/index.md), and a [template](src/index.njk).
 
 ## 🚀 Setup
 
-1. Install Hugo:
+1. Install 11ty:
    ```sh
-   brew install hugo  # Mac
+   npm install -g @11ty/eleventy
    ```
 2. Clone and run locally:
 ```sh
     git clone https://github.com/ginatrapani/life-in-weeks.git
     cd life-in-weeks
-    hugo server -D
+    npx @11ty/eleventy --serve
 ```
-3. Visit [http://localhost:1313/](http://localhost:1313/).
+3. Visit [http://localhost:8080/](http://localhost:8080/).
 
 ## ✨ Customize
 
-- `content/` → Page content
-- `layouts/` → Templates
-- `assets/scss/` → Styles
-- `assets/imgs/` → Site-wide images
-- `static/` → Unprocessed assets
-- `hugo.toml` → Site settings
+- `src/content/` → Page content
+- `src/index.njk` → Templates
+- `src/assets/sass/` → Styles
+- `src/assets/imgs/` → Site-wide images
+- `src/static/` → Unprocessed assets
+- `.eleventy.js` → Site settings
 
 ## Colophon
 

@@ -1,14 +1,13 @@
 [build.environment]
-HUGO_VERSION = "0.143.1"
 NODE_VERSION = "22"
 TZ = "America/New_York"
 
 [build]
-publish = "public"
-command = "hugo --gc --minify"
+publish = "_site"
+command = "npx @11ty/eleventy"
 
 [context.production]
-command = "hugo --minify --baseURL https://weeks.ginatrapani.org/"
+command = "npx @11ty/eleventy --baseUrl https://weeks.ginatrapani.org/"
 
 [context.deploy-preview]
-command = "hugo --baseURL $DEPLOY_PRIME_URL"
+command = "npx @11ty/eleventy --baseUrl $DEPLOY_PRIME_URL"
